@@ -6,3 +6,9 @@ bin/*
 
 .kitchen/
 .kitchen.local.yml
+
+**/idea/
+**/target/
+**/berks-cookbooks/
+**/Berksfile.lock
+**/.kitchen/

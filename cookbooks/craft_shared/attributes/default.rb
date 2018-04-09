@@ -11,4 +11,4 @@ default['craft_shared']['monitoring_cron_day'] = '*'
 default['craft_shared']['monitoring_cron_weekday'] = '*'
 default['craft_shared']['monitoring_cron_month'] = '*'
 
-default['craft_shared']['ssl_dir'] = "/dev/shm"
+default['craft_shared']['ssl_dir'] = "/etc/ssl/certs"

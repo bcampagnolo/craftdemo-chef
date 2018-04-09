@@ -1,0 +1,58 @@
+# You have to export your AWS key and secret for this to work (at least on windows)
+# *unix
+#   export AWS_ACCESS_KEY_ID=XXXXXX
+#   export AWS_SECRET_ACCESS_KEY=XXXXXX
+# *windows
+#   set AWS_ACCESS_KEY_ID=XXXXXX
+#   set AWS_SECRET_ACCESS_KEY=XXXXXX
+
+driver:
+  name: ec2
+
+  # The bastion and instance need to use the same ssh key for kitchen to work - no bueno
+  
+  aws_ssh_key_id: flask-key-west2
+
+  shared_credentials_profile: home
+  region: us-west-2
+  require_chef_omnibus: false
+  instance_type: t2.micro
+  availability_zone: us-west-2b
+  user_data: ./_aws/user-data.sh
+  iam_profile_name: kitchen
+  security_group_ids: ["sg-28923956"] # ssh from bastion
+  subnet_id: subnet-1f9e2366 # PrivateSubnetAz1
+  tags:
+    Name: <%= ENV['USER'] %>-test-kitchen-craftdemo-nginx
+
+transport:
+  # this should really be in .kitchen.local.yml
+
+  # The bastion and instance need to use the same ssh key for kitchen to work - no bueno
+  ssh_key: /Users/pmorrison/.ssh/flask-key-west2.pem
+
+  ssh_gateway: ec2-34-208-188-164.us-west-2.compute.amazonaws.com
+  ssh_gateway_username: ubuntu
+  username: ec2-user
+  connection_timeout: 10
+  connection_retries: 5
+
+provisioner:
+  name: chef_extended_attributes
+  install_strategy: skip
+  solo_rb:
+    ssl_verify_mode: verify_peer
+  chef_solo_path: /usr/bin/chef-solo
+  nodes_path: ../../nodes/data-service/us-west-2
+  roles_path: ../../roles/
+
+platforms:
+  - name: rhel7
+    driver:
+      image_id: ami-d85435a0
+
+suites:
+  - name: dev
+    verifier:
+      inspec_tests:
+        - test/recipes

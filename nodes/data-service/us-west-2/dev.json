@@ -1,0 +1,12 @@
+{
+    "craft_env": "dev",
+
+
+    "upstart_java": {
+        "env": "dev"
+    },
+
+    "run_list": [
+        "role[data-service]"
+    ]
+}

@@ -6,5 +6,5 @@ DEPENDENCIES
     metadata: true
 
 GRAPH
-  craft_shared (0.1.0)
+  craft_shared (0.0.1)
   nginx (0.0.1)

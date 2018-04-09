@@ -1,0 +1,7 @@
+name 'data-services'
+maintainer 'Paul'
+maintainer_email 'openplatform@intuit.com'
+license 'all_rights'
+description 'Installs/Configures data-services'
+long_description 'Installs/Configures data-services'
+version '0.1.0'

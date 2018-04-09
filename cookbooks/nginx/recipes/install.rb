@@ -56,22 +56,6 @@ template "#{node['nginx']['homeDir']}/nginx.conf" do
   backup false
 end
 
-#   template "#{node['nginx']['homeDir']}/conf.d/http-to-https-redirect.conf" do
-#     mode 0o644
-#     source 'http-to-https-redirect.conf.erb'
-#     owner 'root'
-#     group 'root'
-#     backup false
-#   end
-
-#   template "#{node['nginx']['homeDir']}/conf.d/ssl-proxy-protocol.conf" do
-#     mode 0o644
-#     source 'ssl-proxy-protocol.conf.erb'
-#     owner 'root'
-#     group 'root'
-#     backup false
-#   end
-# else
 template "#{node['nginx']['homeDir']}/conf.d/default.conf" do
     mode '0644'
     source 'default.conf.erb'

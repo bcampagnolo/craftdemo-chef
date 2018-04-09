@@ -1,0 +1,9 @@
+{
+    "upstart":{
+        "node_env" : "dev"
+    },
+
+    "run_list":[
+        "role[web-services]"
+    ]
+}

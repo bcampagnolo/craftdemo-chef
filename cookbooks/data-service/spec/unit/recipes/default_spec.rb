@@ -1,12 +1,12 @@
 #
-# Cookbook Name:: nginx
+# Cookbook Name:: data-service
 # Spec:: default
 #
 # Copyright (c) 2016 The Authors, All Rights Reserved.
 
 require 'spec_helper'
 
-describe 'shell-services::configure_app' do
+describe 'data-service::configure_app' do
   context 'When all attributes are default, on an unspecified platform' do
     let(:chef_run) do
       runner = ChefSpec::ServerRunner.new

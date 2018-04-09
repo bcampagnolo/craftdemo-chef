@@ -1,0 +1,50 @@
+# vi:ft=ruby:
+source 'https://supermarket.platform.intuit.net/'
+
+SHARED_COOOKBOOKS_TAG = 'shared-cookbooks-4.0.103'.freeze
+
+# Dependent Cookbooks
+cookbook 'secrets',
+         git: 'https://github.intuit.com/cto-dev-security-services/secrets-cookbook.git',
+         tag: '1.0.2'
+#cookbook 'appdynamics_machine_agent',
+#         git: 'https://github.intuit.com/ctgdevops/shared-cookbooks.git',
+#         rel: 'appdynamics_machine_agent',
+#         tag: SHARED_COOOKBOOKS_TAG
+#cookbook 'appdynamics_java_agent',
+#         git: 'https://github.intuit.com/ctgdevops/shared-cookbooks.git',
+#         rel: 'appdynamics_java_agent',
+#         tag: SHARED_COOOKBOOKS_TAG
+#cookbook 'logrotate',
+#         git: 'https://github.intuit.com/ctgdevops/shared-cookbooks.git',
+#         rel: 'logrotate',
+#         tag: SHARED_COOOKBOOKS_TAG
+#cookbook 'nginx',
+#         git: 'https://github.intuit.com/ctgdevops/shared-cookbooks.git',
+#         rel: 'nginx',
+#         tag: SHARED_COOOKBOOKS_TAG
+#cookbook 'upstart',
+#         git: 'https://github.intuit.com/ctgdevops/shared-cookbooks.git',
+#         rel: 'upstart', tag: SHARED_COOOKBOOKS_TAG
+#cookbook 'upstart_java',
+#         git: 'https://github.intuit.com/ctgdevops/shared-cookbooks.git',
+#         rel: 'upstart_java',
+#         tag: SHARED_COOOKBOOKS_TAG
+#cookbook 'systemd',
+#         git: 'https://github.intuit.com/ctgdevops/shared-cookbooks.git',
+#         rel: 'systemd',
+#         tag: SHARED_COOOKBOOKS_TAG
+
+# Local Cookbooks
+cookbook 'data-services', path: './'
+cookbook 'dream_shared', path: '../dream_shared'
+
+# Uncomment when running against local copies of the shared cookbooks
+SHARED_COOOKBOOKS_DIR = 'd:\github\ctgdevops\shared-cookbooks'
+cookbook 'nginx',  path: SHARED_COOOKBOOKS_DIR + '\nginx'
+cookbook 'logrotate',  path: SHARED_COOOKBOOKS_DIR + '\logrotate'
+cookbook 'upstart',  path: SHARED_COOOKBOOKS_DIR + '\upstart'
+cookbook 'upstart_java',  path: SHARED_COOOKBOOKS_DIR + '\upstart_java'
+cookbook 'systemd',  path: SHARED_COOOKBOOKS_DIR + '\systemd'
+cookbook 'appdynamics_machine_agent',  path: SHARED_COOOKBOOKS_DIR + '\appdynamics_machine_agent'
+cookbook 'appdynamics_java_agent',  path: SHARED_COOOKBOOKS_DIR + '\appdynamics_java_agent'
