@@ -1,0 +1,25 @@
+version: 0.2
+
+environment_variables:
+  plaintext:
+    key: "value"
+    key: "value"
+            
+phases:
+  install:
+    commands:
+      - sudo apt-get update -y
+      - sudo apt-get install -y wget
+  build:
+    commands:
+      - zip *
+  post_build:
+    commands:
+      - echo No post build yet
+      
+  artifacts:
+    type: zip
+    files:
+      - '**/*'
+    discard-paths: no
+ 
