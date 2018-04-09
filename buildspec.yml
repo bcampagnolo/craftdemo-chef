@@ -1,9 +1,4 @@
 version: 0.2
-
-environment_variables:
-  plaintext:
-    key: "value"
-    key: "value"
             
 phases:
   install:
@@ -17,9 +12,8 @@ phases:
     commands:
       - echo No post build yet
       
-  artifacts:
-    type: zip
-    files:
-      - '**/*'
-    discard-paths: no
- 
+artifacts:
+  type: zip
+  files:
+    - '**/*'
+  discard-paths: no
