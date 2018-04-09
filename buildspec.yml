@@ -7,7 +7,7 @@ phases:
       - sudo apt-get install -y wget
   build:
     commands:
-      - zip *
+      - zip cookbooks.zip *
   post_build:
     commands:
       - echo No post build yet
