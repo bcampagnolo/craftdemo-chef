@@ -1,0 +1,75 @@
+egrep="/bin/egrep"
+awk="/bin/awk"
+sed="/bin/sed"
+echo="/bin/echo"
+cat="/bin/cat"
+cpu_count=`$cat /proc/cpuinfo |$egrep processor|wc -l`
+let cpu_count="$cpu_count - 1"
+start_time=`/bin/date +"%T" -d"5 min ago"`
+end_time=`/bin/date +"%T"`
+output="{\"level\": \"10\""
+
+####CPU Stats
+i=0
+output="$output, \"cpu5MinAvg\": {"
+while [ $i -le $cpu_count ]; do
+        info=`/usr/bin/sar -P $i -s $start_time -e $end_time|/usr/bin/tail -n1 2>&1`
+        cpu=`$echo $info|$awk '{printf "%0.0f\n", $3}'`
+        if [ $i -eq $cpu_count ]; then
+                output="$output \"$i\": \"$cpu\""
+        else
+                output="$output \"$i\": \"$cpu\","
+        fi
+        i=$[$i+1]
+done
+output="$output }"
+
+####NJS Cpu Time
+output="$output,\"njsCpuTimeSec\": {"
+pid_count=`/usr/bin/pgrep -f "^node main.js$"|wc -l`
+i=0
+for pid in `/usr/bin/pgrep -f "^node main.js$"`; do
+        i=$[$i+1]
+        CPUSECS=`/bin/ps -o bsdtime -p $pid --no-header | $awk -F":" '{print ($1*60)+$2}'`
+        PORT=`/usr/sbin/lsof -Pp $pid | $egrep LISTEN | $awk -F":" '{print int($NF)}'`
+        #$echo "$pid PORT_${PORT}:${CPUSECS}"
+        if [ $i -eq $pid_count ]; then
+                output="$output \"$PORT\": \"$CPUSECS\""
+        else
+                output="$output \"$PORT\": \"$CPUSECS\","
+        fi
+done
+output="$output }"
+
+######File Handles
+fh=`$cat /proc/sys/fs/file-nr`
+fh_total=`$echo $fh|$awk '{print $3}'`
+fh_used=`$echo $fh|$awk '{print $1}'`
+let fh_free="$fh_total - $fh_used"
+output="$output,\"fileHandle\": {\"total\": \"$fh_total\", \"free\": \"$fh_free\", \"used\": \"$fh_used\"}"
+
+
+
+#######Memory
+mem="$cat /proc/meminfo"
+mem_total=`$mem|$egrep MemTotal:|$awk '{print $2}'`
+mem_free=`$mem|$egrep MemFree:|$awk '{print $2}'`
+let mem_used="$mem_total - $mem_free"
+output="$output,\"memory\": {\"totalkB\": \"$mem_total\", \"freekB\": \"$mem_free\", \"usedkB\": \"$mem_used\"}"
+
+swap_total=`$mem|$egrep SwapTotal:|$awk '{print $2}'`
+swap_free=`$mem|$egrep SwapTotal:|$awk '{print $2}'`
+let swap_used="$swap_total - $swap_free"
+output="$output,\"swap\": {\"totalkB\": \"$swap_total\", \"freekB\": \"$swap_free\", \"usedkB\": \"$swap_used\"}"
+
+#######Disk
+root_usage=`/bin/df -Pk|$egrep -e"/$"|$sed 's/%//g'|$awk '{print "\"totalKB\": \"" $2 "\", \"usedKB\": \"" $3 "\", \"availableKB\": \"" $4 "\", \"pctUsed\": \"" $5"\""}'`
+boot_usage=`/bin/df -Pk|$egrep -e"/boot$"|$sed 's/%//g'|$awk '{print "\"totalKB\": \"" $2 "\", \"usedKB\": \"" $3 "\", \"availableKB\": \"" $4 "\", \"pctUsed\": \"" $5"\""}'`
+output="$output,\"diskUsage\": { \"root\": {$root_usage}, \"boot\": {$boot_usage}, \"app\": {$app_usage}}"
+
+
+output="$output}"
+`$echo $output>><%= node[:craft_shared][:monitoring_log] %>`
+
+
+
