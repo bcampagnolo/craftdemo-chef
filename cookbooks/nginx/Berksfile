@@ -1,0 +1,7 @@
+# source has to be here
+source 'https://supermarket.chef.io/'
+
+metadata
+
+# Local Cookbooks
+cookbook 'craft_shared', path: '../craft_shared'

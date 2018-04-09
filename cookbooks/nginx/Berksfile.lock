@@ -1,0 +1,10 @@
+DEPENDENCIES
+  craft_shared
+    path: ../craft_shared
+  nginx
+    path: .
+    metadata: true
+
+GRAPH
+  craft_shared (0.1.0)
+  nginx (0.0.1)
