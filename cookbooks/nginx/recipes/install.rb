@@ -50,6 +50,10 @@ if node['nginx']['docRoot'] != ''
   end
 end
 
+file "#{node['nginx']['homeDir']}/conf.d/default.conf" do
+  action :delete
+end
+
 template "#{node['nginx']['homeDir']}/nginx.conf" do
   mode '0644'
   source 'nginx.conf.erb'
