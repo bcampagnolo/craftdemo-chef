@@ -12,3 +12,4 @@ bin/*
 **/berks-cookbooks/
 **/Berksfile.lock
 **/.kitchen/
+.vscode/*

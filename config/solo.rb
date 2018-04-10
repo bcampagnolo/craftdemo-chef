@@ -11,7 +11,3 @@ role_path File.join(chef_home_dir, 'roles')
 # Chef log file
 log_location '/var/log/chef/chef.log'
 
-# # Proxy settings
-# http_proxy ENV['http_proxy']
-# https_proxy ENV['https_proxy']
-# no_proxy ENV['no_proxy']
