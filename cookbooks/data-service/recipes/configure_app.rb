@@ -4,7 +4,7 @@
 #
 # Copyright (c) 2016 The Authors, All Rights Reserved.
 
-cookbook_file '/etc/settings.conf' do
+cookbook_file '/etc/settings.cfg' do
     mode '0644'
     source 'settings.conf'
     owner 'root'
