@@ -10,5 +10,5 @@ default_attributes({
     },)
 
 
-run_list 'recipe[dream_shared::install_monitoring_scripts]',
+run_list 'recipe[craft_shared::install_monitoring_scripts]',
          'recipe[data-services::configure_app]'

@@ -1,10 +1,15 @@
 DEPENDENCIES
   craft_shared
     path: ../craft_shared
+  ec2-tags-ohai-plugin
+    path: ../ec2-tags-ohai-plugin
   nginx
     path: .
     metadata: true
 
 GRAPH
   craft_shared (0.0.1)
+  ec2-tags-ohai-plugin (0.2.4)
+    ohai (>= 4.0.0)
   nginx (0.0.1)
+  ohai (5.2.2)

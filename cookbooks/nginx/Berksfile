@@ -5,3 +5,4 @@ metadata
 
 # Local Cookbooks
 cookbook 'craft_shared', path: '../craft_shared'
+cookbook 'ec2-tags-ohai-plugin', path: '../ec2-tags-ohai-plugin'

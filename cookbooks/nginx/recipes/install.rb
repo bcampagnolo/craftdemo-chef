@@ -23,6 +23,7 @@ else
   raise "Platform #{node['platform']} is not supported by this cookbook. Exiting.."
 end
 
+# todo - move to credstash or secret cli / service
 cookbook_file "#{node['nginx']['sslDir']}/nginx-selfsigned.crt" do
     mode '0644'
     source 'nginx-selfsigned.crt'
@@ -30,6 +31,7 @@ cookbook_file "#{node['nginx']['sslDir']}/nginx-selfsigned.crt" do
     group 'root'
 end
 
+# todo - move to credstash or secret cli / service
 cookbook_file "#{node['nginx']['sslDir']}/nginx-selfsigned.key" do
   mode '0644'
   source 'nginx-selfsigned.key'
@@ -51,24 +53,32 @@ end
 template "#{node['nginx']['homeDir']}/nginx.conf" do
   mode '0644'
   source 'nginx.conf.erb'
-  owner 'root'
-  group 'root'
+  owner 'nginx'
+  group 'nginx'
   backup false
 end
 
-template "#{node['nginx']['homeDir']}/conf.d/default.conf" do
+cookbook_file "#{node['nginx']['homeDir']}/conf.d/http-https-redirect.conf" do
     mode '0644'
-    source 'default.conf.erb'
-    owner 'root'
-    group 'root'
+    source 'http-https-redirect.conf'
+    owner 'nginx'
+    group 'nginx'
     backup false
 end
 
 cookbook_file "#{node['nginx']['homeDir']}/proxy.conf" do
   mode '0644'
   source 'proxy.conf'
-  owner 'root'
-  group 'root'
+  owner 'nginx'
+  group 'nginx'
+end
+
+cookbook_file "#{node['nginx']['homeDir']}/conf.d/ssl-proxy-protocol.conf" do
+  mode '0644'
+  source 'ssl-proxy-protocol.conf'
+  owner 'nginx'
+  group 'nginx'
+  backup false
 end
 
 service 'nginx' do

@@ -13,9 +13,9 @@ default_attributes({
         'healthCheck' => {
             'uri' => '/health'
         },
-        'upstream' => false,
-        'sslCert' => '/etc/ssl/certs/nginx-selfsigned.crt',
-        'sslKey' => '/etc/ssl/certs/nginx-selfsigned.key',
+        'upstream' => true,
+        'sslCert' => 'nginx-selfsigned.crt',
+        'sslKey' => 'nginx-selfsigned.key',
 
         "server" => {
             "healthcheck" => {
@@ -24,7 +24,7 @@ default_attributes({
                     {
                         "path" => "/health",
                         "options" => [
-                            "proxy_pass http://localhost:8080;"
+                            "proxy_pass http://app.craftdemodata.com:5000/;"
                         ]
                     }
                 ]
@@ -34,5 +34,7 @@ default_attributes({
 
 })
 
-run_list  'recipe[dream_shared::install_monitoring_scripts]',
-          'recipe[nginx::install]
+run_list 'recipe[ec2-tags-ohai-plugin::default]',
+         'recipe[craft_shared::install_monitoring_scripts]',
+         'recipe[craft_shared::install_datadog]',
+         'recipe[nginx::1.12.2-1.el7_4]'
