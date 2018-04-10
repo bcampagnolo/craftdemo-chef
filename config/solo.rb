@@ -5,7 +5,7 @@ chef_home_dir = File.expand_path('./')
 file_cache_path '/tmp'
 
 # Set path to config
-cookbook_path [ File.join(chef_home_dir, 'berks-cookbooks')]
+cookbook_path [ File.join(chef_home_dir, 'cookbooks')]
 role_path File.join(chef_home_dir, 'roles')
 
 # Chef log file

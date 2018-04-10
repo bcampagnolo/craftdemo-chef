@@ -36,5 +36,4 @@ default_attributes({
 
 run_list 'recipe[ec2-tags-ohai-plugin::default]',
          'recipe[craft_shared::install_monitoring_scripts]',
-         'recipe[craft_shared::install_datadog]',
          'recipe[nginx::1.12.2-1.el7_4]'
