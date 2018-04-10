@@ -6,7 +6,7 @@
 
 cookbook_file '/etc/settings.cfg' do
     mode '0644'
-    source 'settings.conf'
+    source 'settings.cfg'
     owner 'root'
     group 'root'
     backup false
