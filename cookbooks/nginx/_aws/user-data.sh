@@ -13,3 +13,5 @@ aws s3 cp "${S3_ARTIFACT_BUCKET_NAME}/${ARTIFACT_NAME}" ${DEST_DIR}
 # Rename artifact
 #mv ${ARTIFACT_NAME} shell-services.zip
 rpm -ivh ${DEST_DIR}/${ARTIFACT_NAME}
+
+touch "${DEST_DIR}"/user_data.txt
