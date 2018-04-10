@@ -4,24 +4,42 @@
 #
 # Copyright (c) 2016 The Authors, All Rights Reserved.
 
-remote_file File.join(node['upstart_java']['base_dir'],
-                      node['upstart_java']['app_name'],
-                      node['upstart_java']['server_file']) do
-    source "file:///tmp/deploy/#{node['upstart_java']['server_file']}"
-    owner node['upstart_java']['user']
-    group node['upstart_java']['group']
-    mode '0755'
+cookbook_file '/etc/settings.conf' do
+    mode '0644'
+    source 'settings.conf'
+    owner 'root'
+    group 'root'
+    backup false
 end
 
-execute 'permissions fix' do
-  command 'chmod -R 755 /app'
-  action :run
+# Create the docRoot if it is set
+if node['data-service_data-service']['dir'] != ''
+    directory node['data-service_data-service']['dir'] do
+      owner 'root'
+      group 'root'
+      mode '0755'
+      action :create
+      recursive true
+    end
+  end
+
+# install the app 
+execute 'install flask app' do
+    environment(
+        'PREFIX_PATH' => node['data-service_data-service']['dir']
+      )
+    command 'pip install --install-option="--prefix=$PREFIX_PATH" /tmp/deploy/flask.zip'
 end
 
-service node['upstart_java']['app_name'] do
-    supports status: true
-    provider Chef::Provider::Service::Upstart
-    action [:enable, :start]
+# start the app
+# export FLASK_APP=indecision
+# export INDECISION_SETTINGS=/etc/settings.cfg
+execute 'start flask app' do
+    environment(
+        'FLASK_APP' => 'indescision',
+        'INDECISION_SETTINGS' => '/etc/settings.cfg'
+      )
+    command 'flask run --host=0.0.0.0 &'
 end
 
 execute 'Mark app online 10 retries with 10 sec delay' do

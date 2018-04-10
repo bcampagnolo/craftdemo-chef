@@ -11,4 +11,4 @@ default_attributes({
 
 
 run_list 'recipe[craft_shared::install_monitoring_scripts]',
-         'recipe[data-services::configure_app]'
+         'recipe[data-service::configure_app]'

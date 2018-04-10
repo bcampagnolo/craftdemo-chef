@@ -16,7 +16,7 @@ driver:
   security_group_ids: ["sg-28923956"] # ssh from bastion
   subnet_id: subnet-1f9e2366 # PrivateSubnetAz1
   tags:
-    Name: <%= ENV['USER'] %>-test-kitchen-craftdemo-nginx
+    Name: <%= ENV['USER'] %>-test-kitchen-craftdemo-data
 
 transport:
   # this should really be in .kitchen.local.yml
