@@ -4,11 +4,11 @@
 #
 # Copyright (c) 2016 The Authors, All Rights Reserved.
 
-# stop datadog-agent
-service 'datadog-agent stop' do
-  action :stop
-  stop_command '/bin/systemctl stop datadog-agent.service'
-end
+# # stop datadog-agent
+# service 'datadog-agent stop' do
+#   action :stop
+#   stop_command '/bin/systemctl stop datadog-agent.service'
+# end
 
 cookbook_file '/etc/settings.cfg' do
   mode '0644'
@@ -70,8 +70,8 @@ end
 #     action :run
 # end
 
-# start datadog-agent
-service 'datadog-agent start' do
-  action :start
-  start_command '/bin/systemctl start datadog-agent.service'
-end
+# # start datadog-agent
+# service 'datadog-agent start' do
+#   action :start
+#   start_command '/bin/systemctl start datadog-agent.service'
+# end

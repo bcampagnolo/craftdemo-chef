@@ -42,7 +42,7 @@ provisioner:
 platforms:
   - name: rhel7
     driver:
-      image_id: ami-d85435a0
+      image_id: ami-7dd1b105
 
 suites:
   - name: dev
