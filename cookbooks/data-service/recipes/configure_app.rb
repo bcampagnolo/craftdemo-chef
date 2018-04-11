@@ -69,9 +69,9 @@ service 'datadog-agent' do
   action [ :start ]
 end
 
-# execute 'Mark app online 10 retries with 10 sec delay' do
-#     command "curl -I http://localhost:5000/health | grep 200"
-#     retries 10
-#     retry_delay 10
-#     action :run
-# end
+execute 'Mark app online 10 retries with 10 sec delay' do
+    command "curl -I http://localhost:5000/health | grep 200"
+    retries 10
+    retry_delay 10
+    action :run
+end
