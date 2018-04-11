@@ -4,6 +4,12 @@
 #
 # Copyright (c) 2016 The Authors, All Rights Reserved.
 
+# stop datadog-agent
+service 'datadog-agent' do
+  supports status: true, restart: true, reload: true
+  action [ :stop ]
+end
+
 cookbook_file '/etc/settings.cfg' do
   mode '0644'
   source 'settings.cfg'
@@ -42,12 +48,6 @@ if node['data-service_data-service']['logDir'] != ''
   end
 end
 
-# stop datadog-agent
-service 'datadog-agent' do
-  supports status: true, restart: true, reload: true
-  action [ :stop ]
-end
-
 # install the app 
 execute 'install flask app' do
   command 'pip install /tmp/deploy/indecision.zip'
@@ -63,15 +63,15 @@ execute 'start flask app' do
   command 'supervisord -c /etc/supervisord.conf'
 end
 
+# execute 'Mark app online 10 retries with 10 sec delay' do
+#     command "curl -I http://localhost:5000/health | grep 200"
+#     retries 10
+#     retry_delay 10
+#     action :run
+# end
+
 # start datadog-agent
 service 'datadog-agent' do
   supports status: true, restart: true, reload: true
   action [ :start ]
-end
-
-execute 'Mark app online 10 retries with 10 sec delay' do
-    command "curl -I http://localhost:5000/health | grep 200"
-    retries 10
-    retry_delay 10
-    action :run
 end
