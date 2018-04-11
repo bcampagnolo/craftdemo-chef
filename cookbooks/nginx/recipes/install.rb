@@ -89,3 +89,9 @@ service 'nginx' do
   supports status: true, restart: false, reload: true
   action [ :enable, :start ]
 end
+
+# start datadog-agent
+service 'datadog-agent start' do
+  action :start
+  start_command '/bin/systemctl start datadog-agent.service'
+end
