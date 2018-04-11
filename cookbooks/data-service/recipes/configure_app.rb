@@ -38,6 +38,7 @@ execute 'start flask app' do
         'FLASK_APP' => 'indescision',
         'INDECISION_SETTINGS' => '/etc/settings.cfg'
       )
+    cwd node['data-service_data-service']['dir']
     command 'flask run --host=0.0.0.0 &'
 end
 
