@@ -23,6 +23,17 @@ if node['data-service_data-service']['dir'] != ''
     end
   end
 
+# Create the flask doc if it is set
+if node['data-service_data-service']['logDir'] != ''
+    directory node['data-service_data-service']['logDir'] do
+      owner 'root'
+      group 'root'
+      mode '0755'
+      action :create
+      recursive true
+    end
+  end
+
 # install the app 
 execute 'install flask app' do
     environment(
@@ -31,15 +42,27 @@ execute 'install flask app' do
     command 'pip install --install-option="--prefix=$PREFIX_PATH" /tmp/deploy/craft-data-services-flask.zip'
 end
 
+# stop datadog-agent
+service 'datadog-agent' do
+  supports status: true, restart: true, reload: true
+  action [ :stop ]
+end
+
 # start the app
 # TODO needs to be upstart
 execute 'start flask app' do
     environment(
-        'FLASK_APP' => 'indescision',
+        'FLASK_APP' => node['data-service_data-service']['appName'],
         'INDECISION_SETTINGS' => '/etc/settings.cfg'
       )
     cwd node['data-service_data-service']['dir']
     command 'flask run --host=0.0.0.0 &'
+end
+
+# start datadog-agent
+service 'datadog-agent' do
+  supports status: true, restart: true, reload: true
+  action [ :start ]
 end
 
 # execute 'Mark app online 10 retries with 10 sec delay' do
