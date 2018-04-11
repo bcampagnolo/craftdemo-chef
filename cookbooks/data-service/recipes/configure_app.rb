@@ -39,7 +39,7 @@ execute 'install flask app' do
     environment(
         'PREFIX_PATH' => node['data-service_data-service']['dir']
       )
-    command 'pip install --install-option="--prefix=$PREFIX_PATH" /tmp/deploy/craft-data-services-flask.zip'
+    command 'pip install --install-option="--prefix=$PREFIX_PATH" /tmp/deploy/indecision.zip'
 end
 
 # stop datadog-agent
