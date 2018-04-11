@@ -63,6 +63,11 @@ execute 'start flask app' do
   command 'supervisord -c /etc/supervisord.conf'
 end
 
+# wait for flask a bit #
+execute 'wait for flask' do
+  command 'sleep 60'
+end
+
 # execute 'Mark app online 10 retries with 10 sec delay' do
 #     command "curl -I http://localhost:5000/health | grep 200"
 #     retries 10
@@ -70,8 +75,8 @@ end
 #     action :run
 # end
 
-# # start datadog-agent
-# service 'datadog-agent start' do
-#   action :start
-#   start_command '/bin/systemctl start datadog-agent.service'
-# end
+# start datadog-agent
+service 'datadog-agent start' do
+  action :start
+  start_command '/bin/systemctl start datadog-agent.service'
+end
