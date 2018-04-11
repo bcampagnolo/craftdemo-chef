@@ -12,7 +12,7 @@ cookbook_file '/etc/settings.cfg' do
     backup false
 end
 
-# Create the docRoot if it is set
+# Create the flask doc if it is set
 if node['data-service_data-service']['dir'] != ''
     directory node['data-service_data-service']['dir'] do
       owner 'root'
@@ -28,12 +28,11 @@ execute 'install flask app' do
     environment(
         'PREFIX_PATH' => node['data-service_data-service']['dir']
       )
-    command 'pip install --install-option="--prefix=$PREFIX_PATH" /tmp/deploy/flask.zip'
+    command 'pip install --install-option="--prefix=$PREFIX_PATH" /tmp/deploy/indecision-1.0.zip'
 end
 
 # start the app
-# export FLASK_APP=indecision
-# export INDECISION_SETTINGS=/etc/settings.cfg
+# TODO needs to be upstart
 execute 'start flask app' do
     environment(
         'FLASK_APP' => 'indescision',
