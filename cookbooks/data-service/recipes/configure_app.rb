@@ -28,7 +28,7 @@ execute 'install flask app' do
     environment(
         'PREFIX_PATH' => node['data-service_data-service']['dir']
       )
-    command 'pip install --install-option="--prefix=$PREFIX_PATH" /tmp/deploy/indecision-1.0.zip'
+    command 'pip install --install-option="--prefix=$PREFIX_PATH" /tmp/deploy/craft-data-services-flask.zip'
 end
 
 # start the app
@@ -41,9 +41,9 @@ execute 'start flask app' do
     command 'flask run --host=0.0.0.0 &'
 end
 
-execute 'Mark app online 10 retries with 10 sec delay' do
-    command "curl -I http://localhost:5000/health | grep 200"
-    retries 10
-    retry_delay 10
-    action :run
-end
+# execute 'Mark app online 10 retries with 10 sec delay' do
+#     command "curl -I http://localhost:5000/health | grep 200"
+#     retries 10
+#     retry_delay 10
+#     action :run
+# end
